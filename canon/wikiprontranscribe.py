@@ -1,20 +1,21 @@
+from dataclasses import replace
 import string
 
 def dictionary(): #create dictionary, taking priority in reverse order
     d={}
     with open("dicts/eng_latn_us_broad.tsv") as f: #takes last listed pronunciation
         for line in f:
-            fixedstring = line.replace(" ", "")
+            fixedstring = line.replace(" ", "").replace("ˈ", "").replace("ː", "").replace("ˌ", "")
             (key, value) = fixedstring.split()
             d[key] = value
     with open("dicts/eng_latn_uk_broad.tsv") as f: #takes last listed pronunciation
         for line in f:
-            fixedstring = line.replace(" ", "") 
+            fixedstring = line.replace(" ", "").replace("ˈ", "").replace("ː", "").replace("ˌ", "")
             (key, value) = fixedstring.split() 
             d[key] = value
     with open("dicts/cmudict.txt") as f:
         for line in f:
-            fixedstring = line.split(",", 1)[0].lower() #takes first listed pronunciation
+            fixedstring = line.split(",", 1)[0].lower().replace("ˈ", "").replace("ː", "").replace("ˌ", "") #takes first listed pronunciation
             (key, value) = fixedstring.split()
             d[key] = value
     return d
